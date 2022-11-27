@@ -3,14 +3,13 @@ const app = express();
 const port = 3000;
 
 const goodsRouter = require("./routes/goods.js")
-const cartsRouter = require("./routes/carts.js")
 const connect = require("./schemas");
 connect();
 
 app.use(express.json()); // request 안에 body/body-parser Middleware를 쓰기위한 문법
 
 // localhost:3000/api
-app.use("/api", [goodsRouter, cartsRouter]);
+app.use("/api", [goodsRouter]);
 
 app.post("/", (req, res) => {
     console.log(req.body);
