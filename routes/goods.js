@@ -89,18 +89,21 @@ router.post("/goods", async (req, res) => {
     res.json({ goods: createdGoods });
 });
 
-
-router.get("/goods", (req, res) => {
-    res.status(200).json({goods});
+router.get("/goods", async (req, res) => {
+    const goods = await Goods.find({});
+    const results = goods.map((good) => {
+        return {"goods": good}
+    });
+    res.status(200).json({results});
 });
 
-router.get("/goods/:goodsId", (req, res) => {
+router.get("/goods/:goodsId", async (req, res) => {
     const {goodsId} = req.params;
 
-    const [result] = goods.filter((good) => Number(goodsId) === good.goodsId);
+    // const [result] = goods.filter((good) => Number(goodsId) === good.goodsId);
+    const [result] = await Goods.find({goodsId});
 
     res.status(200).json({"detail" : result});
 });
 
 module.exports = router;
-
